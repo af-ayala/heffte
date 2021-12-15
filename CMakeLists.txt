@@ -171,17 +171,20 @@ configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/HeffteConfig.cm
 ######################
 # EXAMPLES and TESTS #
 ######################
-add_subdirectory(benchmarks)
-add_subdirectory(examples)
-enable_testing()
-add_subdirectory(test)
-if (Heffte_ENABLE_FORTRAN)
-    add_subdirectory(fortran)
+# Only do these if this is the main project, and not if it is included through
+# add_subdirectory
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    add_subdirectory(benchmarks)
+    add_subdirectory(examples)
+    enable_testing()
+    add_subdirectory(test)
+    if (Heffte_ENABLE_FORTRAN)
+        add_subdirectory(fortran)
+    endif()
+    if (Heffte_ENABLE_PYTHON)
+        add_subdirectory(python)
+    endif()
 endif()
-if (Heffte_ENABLE_PYTHON)
-    add_subdirectory(python)
-endif()
-
 
 ###########################
 # Post Install Test
